@@ -1,0 +1,99 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the [swagger](http://swagger.io)  documentation for the `KitchenCourier challenge`. It provides documentation for the public API of the KitchenCourier backend.",
+    "version": "1.0.0",
+    "title": "KitchenCourier API",
+    "contact": {
+      "email": "s.k.larsen84@gmail.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "paths": {
+    "/courier": {
+      "post": {
+        "tags": ["courier"],
+        "summary": "spawn a new courier and send it towards the kitchen",
+        "description": "Spawns a new courier.",
+        "consumes": ["application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of the courier",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "id of the courier",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "travelTime",
+            "in": "formData",
+            "description": "travelTime of the carrier",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Courier successfully spawned."
+          },
+          "405": {
+            "description": "Bad courier format"
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": ["order"],
+        "summary": "post a new order to the system",
+        "description": "Submits a new order to the system.",
+        "consumes": ["application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "id of the order",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of the courier",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "prepTime",
+            "in": "formData",
+            "description": "Prepartion time for the order in MS",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order successfully spawned."
+          },
+          "405": {
+            "description": "Bad order format"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
