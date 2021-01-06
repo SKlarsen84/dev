@@ -58,6 +58,32 @@
           }
         }
       }
+    },
+    "/courier": {
+      "post": {
+        "tags": ["courier"],
+        "summary": "post a new courier to the system - but does not create a corresponding order in the system",
+        "description": "Submits a new courier to the system.",
+        "consumes": ["application/x-www-form-urlencoded"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "description": "id of the order",
+            "required": false,
+            "type": "string",
+            "default": "any"
+          }],
+        "responses": {
+          "200": {
+            "description": "Courier successfully spawned."
+          },
+          "405": {
+            "description": "Bad order format"
+          }
+        }
+      }
     }
   },
   "externalDocs": {

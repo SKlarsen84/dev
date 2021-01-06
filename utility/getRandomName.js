@@ -1,9 +1,10 @@
 const COURIERNAMES = require("../data/" + process.env.COURIERNAMES).names;
 
 /**
- * Retrieves a random name from the COURIERNAMES file specified in our dotenv.
+ * Retrieves a random name for a courier
+ * @function
  */
-
-module.exports = () => {
+function getRandomName() {
   return COURIERNAMES[Math.floor(Math.random() * COURIERNAMES.length)];
-};
+}
+module.exports = getRandomName;

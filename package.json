@@ -9,8 +9,13 @@
     "express": "^4.17.1",
     "express-flash": "^0.0.2",
     "fastq": "^1.10.0",
+    "gulp": "^4.0.2",
+    "gulp-jsdoc": "^0.1.5",
+    "gulp-tap": "^2.0.0",
     "jade": "^1.11.0",
+    "jsdoc": "^3.6.6",
     "level": "^6.0.1",
+    "open": "^7.3.0",
     "socket.io": "^3.0.4",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
@@ -18,7 +23,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "document": "jsdoc -c ./.jsdoc.conf.json -d ./docs/",
+    "start": "node app.js"
   },
   "author": "Stefan Larsen",
   "license": "ISC"

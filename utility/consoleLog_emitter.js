@@ -1,14 +1,14 @@
-/**
- * extends our console.log() a bit so as to also emit console events to socket.io clients
- *
- * In any sort of sane production environment we'd be using a battle hardened logging library
- * rather than jerry-rigging the console prototype.
- */
+  /**
+   * provides a passive shim to the console.prototype's log function that allows it to emit logged lines as events via socket
+   * @function
+   */
 
-module.exports = function (io) {
+function consoleLog_emitter() {
   var exLog = console.log;
   console.log = function (msg) {
     exLog.apply(this, arguments);
     io.emit("logmessage", msg);
   };
-};
+}
+
+module.exports = consoleLog_emitter

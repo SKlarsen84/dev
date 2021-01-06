@@ -18,6 +18,13 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"
+      integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g=="
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
@@ -25,7 +32,7 @@
       <div class="container" style="max-width: 100%">
         <div class="row" style="padding: 55px">
           <div class="col-lg-12">
-            <h1><b>Kitchen</b><i style="color: Navy">Courier</i></h1>
+           <span><h1><b>Kitchen</b><i style="color: Navy">Courier</i></h1><small> Courier Strategy Performance Analytics</small></span> 
             <br />
             <div class="text-right">
               <small
@@ -161,6 +168,7 @@
                           height: 15rem;
                           padding: 15px;
                           overflow-y: auto;
+                          font-size: 8pt;
                         "
                       >
                       </textarea>
@@ -169,17 +177,99 @@
                 </div>
                 <hr />
 
+                <!--WAIT TIME LOGS-->
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="card">
+                      <div class="card-header strategyheader">
+                        <h6>Courier wait times</h6>
+                      </div>
+                      <textarea
+                        id="courierWaitTimes"
+                        style="
+                          background-color: rgb(202, 202, 202);
+                          color: rgb(39, 49, 71);
+                          height: 10rem;
+                          padding: 15px;
+                          overflow-y: auto;
+                        "
+                      >
+                      </textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="card">
+                      <div class="card-header strategyheader">
+                        <h6>Order wait times</h6>
+                      </div>
+                      <textarea
+                        id="orderWaitTimes"
+                        style="
+                          background-color: rgb(202, 202, 202);
+                          color: rgb(39, 49, 71);
+                          height: 10rem;
+                          padding: 15px;
+                          overflow-y: auto;
+                        "
+                      >
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+                <!--WAIT TIME LOGS-->
+                <div class="row" style="padding-top: 10px" v-if="strategy!=''">
+                  <div class="col-lg-12">
+                    <h6>Strategy averages for {{order_times.length +1}} <i>{{strategy}}</i> orders</h6>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="card">
+                      <div class="card-header strategyheader">
+                        <h6>
+                          🚴‍♂️ Couriers wait: <b>{{courier_average.toFixed(2)}}</b> ms
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="card">
+                      <div class="card-header strategyheader">
+                        <h6>
+                          🍔 Orders wait: <b>{{order_average.toFixed(2)}}</b> ms
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
                 <!--CONTROL BUTTONS-->
-                <div class="row" style="padding: 55px">
+                <div class="row" style="padding-top: 10px">
+                  <hr />
+                  <div class="col-lg-12">
+                    <div class="slidecontainer">
+                      Number of orders pr. second:
+                      <span id="ordernumber">2</span>
+                      <input
+                        type="range"
+                        min="1"
+                        max="3"
+                        value="2"
+                        class="slider"
+                        id="jobRange"
+                        style="width: 100%"
+                      />
+                    </div>
+                  </div>
                   <div class="col-lg-6">
                     <div class="card" style="margin-bottom: 5px">
                       <div class="card-header">
-                        <h4>Matched strategy</h4>
+                        <h6>Matched strategy</h6>
                       </div>
                       <button
                         type="button"
-                        class="btn btn-primary btn-block"
-                        onclick="uploadOrders({ordersPrSecond: 2, strategy: 'matched'})"
+                        class="btn btn-success btn-block btn-small"
+                        onclick="uploadOrders({strategy: 'matched'})"
                       >
                         Start dispatching orders
                       </button>
@@ -189,18 +279,22 @@
                   <div class="col-lg-6">
                     <div class="card" style="margin-bottom: 5px">
                       <div class="card-header">
-                        <h4>First-in-first-out</h4>
+                        <h6>First-in-first-out</h6>
                       </div>
                       <button
                         type="button"
-                        class="btn btn-primary btn-block"
-                        onclick="uploadOrders({ordersPrSecond: 2, strategy: 'fifo'})"
+                        class="btn btn-primary btn-block btn-small"
+                        onclick="uploadOrders({strategy: 'fifo'})"
                       >
                         Start dispatching orders
                       </button>
                     </div>
                   </div>
                 </div>
+
+                <hr />
+
+                <!-- CHART AREA-->
               </div>
             </div>
           </div>

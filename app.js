@@ -2,7 +2,8 @@
 require("dotenv").config();
 const server = require("./server");
 const PORT = process.env.PORT || 3000;
-const io = require("socket.io")(server);
+const open = require('open');
+io = require("socket.io")(server);
 
 //add console.log emitter to notifiy our socket clients about console log events.
 require("./utility/consoleLog_emitter")(io);
@@ -15,6 +16,13 @@ in production we'd be using a battle-hardened queue/storage system such as bull/
  */
 require("./globalQueues")(io);
 
-server.listen(PORT, () => {
+
+//Start the express server
+server.listen(PORT, async () => {
   console.log("Express server running on " + PORT);
+
+
+    // Opens the site in the default browser
+    await open('http://localhost:'+PORT);
 });
+

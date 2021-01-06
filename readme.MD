@@ -1,79 +1,71 @@
-# Kitchen/Courier Challenge
+# Kitchen/Courier Challenge 🚀
+
+
+![Kitchen/Courier analytics frontend](https://i.imgur.com/FYcWLla.png)
 This is a suggestion for a framework that can handle the Kitchen/Courier challenge; 
 
+### Description:
+> Implements a real-time system that simulates the fulfillment of delivery orders for a kitchen.
+> The system receives a user-specified (default: 2) number of delivery orders per second.
+
+> Each order takes some time (defined as `prepTime` in order JSON) to be prepared. 
+> Once an order is prepared, it is waiting and ready for courier pickup.
+
+>Upon receiving an order, the system should immediately dispatch a courier to pick it up.
+>Couriers arrive randomly following a uniform distribution, 3-15 seconds after they’ve been dispatched. 
+>Couriers have to wait at the kitchen if the order they are picking up is not ready.
+>Once a courier picks up an order it is instantaneously delivered.
+
+>The user can use the front-end analytics tool to gauge the performance metrics of 2 different delivery/pickup strategies
+>Matched: a courier is dispatched for a specific order and may only pick up that order
+>First-in-first-out: a courier picks up the next available order upon arrival. If there are multiple orders available, pick up an arbitrary order. 
+
+
+
+### Solution features
+- NodeJs/Express backend with a custom queueing system for handling orders/couriers in a simulated resturant.
+- The backend recives order requests and handles courier/order events via their respective classes.
+- Swagger documentation for the API is available at localhost:port/Swagger while the app is running.
+- Frontend tool for analysis of courier/order performance, built with Vue.
+- The queues and order/courier classes emit relevant events to any client (e.g. the analytics frontend) via. websockets for realTime statistics/event tracking
+- The frontend/analytics tool can be used to run tests for different strategies with. different order-loads in real time.
+- Backend provides analytics tool with a real-time feed of the stdout log for debugging/evaulation directly in the browser
+
+
+##### Note:
+the queue/worker implementation presented in this application is **not** battle-hardened, and should **not** be used in production.*
+The aim of the application is to implement a custom queue/worker data structure and operationalize it.
+
+For production purposes, you'd be better off using a  production ready queue/worker library such as [bull/redis](https://github.com/OptimalBits/bull).
+
+
+
 ## Getting Started
+These instructions will get you a copy of the project up and running on your local machine.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+##### Prerequisites
 
-### Prerequisites
+- nodeJS > 8.0
+- chrome / any modern web browser
 
-What things you need to install the software and how to install them
+First clone the repo: `git clone https://github.com/SKlarsen84/dev.git kitchencourier`
 
-```
-Give examples
-```
+Then cd into the /kitchencourier folder and run: `npm install`
 
-### Installing
+Once npm install is done, start the application via `npm run start`
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [NodeJS/Express](https://expressjs.com/) - Backend/Api
+* [Swagger.io](https://swagger.io/) - API documentation
+* [VueJS](https://vuejs.org/) - Frontend/Analytics tool
+* [JSdoc](https://github.com/jsdoc/jsdoc) - class documentation
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Stefan K. Larsen** - *s.k.larsen84@gmail.com* - [Linkedin](https://www.linkedin.com/in/stefan-larsen-806b16114/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
@@ -81,6 +73,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* The good people at [ka-ching](https://ka-ching.dk/)

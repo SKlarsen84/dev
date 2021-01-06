@@ -1,4 +1,4 @@
-/***
+/*
  *
  * The global queues we construct below are fundamentally ordinary arrays with a Proxy object superimposed
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
@@ -7,8 +7,8 @@
  * hinge on the use of global arrays; but for our purposes here they will do fine;
  *
  * While most of the logic surrounding the actual handling of queue content is delegated to their classes, the queues themselves
- * will serve as event emitters  via socket.io;
- * */
+ * will serve as event emitters via socket.io;
+ */
 
 
 //proxy that will  trigger on any property change/addition of a given object.
@@ -23,26 +23,28 @@ let observe = (obj, fn) =>
     },
   });
 
-module.exports = function (io) {
+  
+
+module.exports = function () {
   global.TravellingCourierQueue = observe(new Array(), () => {
-    emitQueueStatus(io);
+    emitQueueStatus();
   });
 
   global.ReadyCourierQueue = observe(new Array(), async () => {
-    emitQueueStatus(io);
+    emitQueueStatus();
   });
 
   global.OrderQueue = observe(new Array(), () => {
-    emitQueueStatus(io);
+    emitQueueStatus();
   });
 
   global.OrdersForPickup = observe(new Array(), async () => {
     //if something happens with our order queue, emit this to any client that may want to know.
-    emitQueueStatus(io);
+    emitQueueStatus();
   });
 };
 
-function emitQueueStatus(io) {
+function emitQueueStatus() {
   io.emit("queues", {
     TravellingCourierQueue,
     ReadyCourierQueue,
