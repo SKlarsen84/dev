@@ -22,6 +22,8 @@ let vue = new Vue({
       socket.emit("leave", this.username);
     };
 
+
+    //Handle all our socket events and feed our data back to vue.
     socket.on("queues", (queues) => {
       this.couriers_pending = queues.TravellingCourierQueue;
       this.couriers_ready = queues.ReadyCourierQueue;
@@ -85,18 +87,8 @@ let vue = new Vue({
   },
 });
 
-function updateAverages() {}
 
-//Initiate orderData.json and make it accessible.
-function getOrderData(filename) {
-  $.getJSON(filename, function (data) {
-    return data;
-  }).fail(function () {
-    console.log("An error has occurred.");
-  });
-}
 
-//function for uploading orders
 async function uploadOrders(options) {
   var slider = document.getElementById("jobRange");
 
@@ -160,6 +152,10 @@ function postOrderToApi(orders, strategy) {
   });
 }
 
+
+
+
+//Set up the order/second slider.
 var slider = document.getElementById("jobRange");
 var output = document.getElementById("ordernumber");
 output.innerHTML = slider.value; // Display the default slider value
