@@ -92,6 +92,17 @@ let vue = new Vue({
 async function uploadOrders(options) {
   var slider = document.getElementById("jobRange");
 
+  vue.couriers_pending = [],
+  vue.couriers_ready = [],
+  vue.orders_pending = [],
+  vue.orders_ready = [],
+  vue.courier_times = [],
+  vue.order_times = [],
+  vue.order_average= 0,
+  vue.courier_average= 0,
+  vue.strategy = ''
+
+
   //read the range slider for desired number of jobs pr. second.
 
   var ordersPrSecond = slider.value / 1;
