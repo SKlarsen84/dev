@@ -1,7 +1,6 @@
 //Express.js and body-parser
 const express = require("express");
 const bodyParser = require("body-parser");
-const flash = require("express-flash");
 
 //Middleware for serving the /public folder as a static folder
 const staticFileMiddleware = express.static(__dirname + "/public");
@@ -10,7 +9,6 @@ const staticFileMiddleware = express.static(__dirname + "/public");
  SETUP EXPRESS app
 **************/
 var app = express();
-app.use(flash());
 
 //Set up swagger for documenting our API.
 const swaggerUi = require("swagger-ui-express");

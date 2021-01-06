@@ -6,18 +6,45 @@
 
 class Order {
   constructor(obj) {
+    console.log(obj)
     //if our object is not a proper order object, containing our needed information, throw it out immediately.
     if (!obj.id || !obj.name || !obj.prepTime) {
       throw "Invalid order object";
     }
 
-    //If we pass this rudimentary check, we are feel confident in adding our order to the queue.
-    this.addToOrders(obj);
+    (this.id = obj.id), (this.name = obj.name), (this.prepTime = obj.prepTime);
+
+    //Immediately once a order is accepted, we add it to the order queue
+    OrderQueue.push(this);
+    console.log(
+      `new order: ${this.id} for ${obj.name}- ready in ${obj.prepTime * 1000}`
+    );
+
+    //After this, the cooks start working and the prepTime counter begins; once its preptime is reached, the order is marked as ready.
+    setTimeout(this.markOrderAsReady, this.prepTime * 1000, this);
   }
 
-  //HAve the order add itself to the order queue
-  addToOrders(order) {
-    OrderQueue.push(order);
+  //we use markAsReady to add it to the list of ready orders.
+  markOrderAsReady(order) {
+    //Find this order instance in  the orderqueue.
+    let index = OrderQueue.findIndex((order) => {
+      return order.id == this.id;
+    });
+
+    //We found our order in the OrderQueue; splice our order out of the orderqueue and then push it to the list of Orders for Pickup
+    if (index) {
+      OrderQueue.splice(index, 1);
+      OrdersForPickup.push(order);
+
+      //Notifiy each of our couriers that there's an order, and have them take it via either FIFO/matched strategy, depending .
+      ReadyCourierQueue.forEach((courier) => {
+        try {
+          courier.findAvailableOrder(courier);
+        } catch (ex) {
+          throw ex;
+        }
+      });
+    }
   }
 }
 
