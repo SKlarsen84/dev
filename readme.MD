@@ -2,10 +2,12 @@
 
 
 ![Kitchen/Courier analytics frontend](https://i.imgur.com/FYcWLla.png)
-This is a suggestion for a framework that can handle the Kitchen/Courier challenge; 
+
 
 ### Description:
-> Implements a real-time system that simulates the fulfillment of delivery orders for a kitchen.
+> This is a suggestion for a framework that can handle the Kitchen/Courier challenge.
+
+> It implements a real-time system that simulates the fulfillment of delivery orders for a kitchen.
 > The system receives a user-specified (default: 2) number of delivery orders per second.
 
 > Each order takes some time (defined as `prepTime` in order JSON) to be prepared. 
@@ -21,6 +23,13 @@ This is a suggestion for a framework that can handle the Kitchen/Courier challen
 >First-in-first-out: a courier picks up the next available order upon arrival. If there are multiple orders available, pick up an arbitrary order. 
 
 
+##### Note:
+The queue/worker implementation presented in this application is **not** battle-hardened, and should **not** be used in production.*
+The aim of the application is to implement a custom queue/worker data structure and operationalize it.
+
+For production purposes, you'd be better off using a  production ready queue/worker library such as [bull/redis](https://github.com/OptimalBits/bull).
+
+
 
 ### Solution features
 - NodeJs/Express backend with a custom queueing system for handling orders/couriers in a simulated resturant.
@@ -30,14 +39,6 @@ This is a suggestion for a framework that can handle the Kitchen/Courier challen
 - The queues and order/courier classes emit relevant events to any client (e.g. the analytics frontend) via. websockets for realTime statistics/event tracking
 - The frontend/analytics tool can be used to run tests for different strategies with. different order-loads in real time.
 - Backend provides analytics tool with a real-time feed of the stdout log for debugging/evaulation directly in the browser
-
-
-##### Note:
-the queue/worker implementation presented in this application is **not** battle-hardened, and should **not** be used in production.*
-The aim of the application is to implement a custom queue/worker data structure and operationalize it.
-
-For production purposes, you'd be better off using a  production ready queue/worker library such as [bull/redis](https://github.com/OptimalBits/bull).
-
 
 
 ## Getting Started
