@@ -12,8 +12,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class Order {
   constructor(obj) {
-    console.log(obj);
- 
+  
     if (!obj.name || !obj.prepTime) {
       throw "Invalid order object"; //we're missing some valuable data here, that we cannot generate ourselves.
     }

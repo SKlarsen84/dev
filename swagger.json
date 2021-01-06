@@ -63,7 +63,7 @@
       "post": {
         "tags": ["courier"],
         "summary": "post a new courier to the system - but does not create a corresponding order in the system",
-        "description": "Submits a new courier to the system.",
+        "description": "Submits a new courier to the system - but does not create a corresponding order. This can be used to further stress test the system by introducing an asymmetric ratio of couriers:orders",
         "consumes": ["application/x-www-form-urlencoded"],
         "produces": ["application/json"],
         "parameters": [
