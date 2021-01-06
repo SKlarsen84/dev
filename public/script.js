@@ -1,6 +1,5 @@
 var socket = io();
 
-
 //Launch Vue app instance.
 let vue = new Vue({
   el: "#app",
@@ -10,18 +9,17 @@ let vue = new Vue({
     couriers_ready: [],
     orders_pending: [],
     orders_ready: [],
-    courier_times : [],
-    order_times : [],
+    courier_times: [],
+    order_times: [],
     order_average: 0,
     courier_average: 0,
-    strategy: ''
+    strategy: "",
   },
 
   created() {
     window.onbeforeunload = () => {
       socket.emit("leave", this.username);
     };
-
 
     //Handle all our socket events and feed our data back to vue.
     socket.on("queues", (queues) => {
@@ -45,7 +43,8 @@ let vue = new Vue({
       //push our waitTime to the averaging array.
       this.courier_times.push(waitTime);
       this.courier_average =
-        this.courier_times.reduce((a, b) => a + b, 0) / this.courier_times.length;
+        this.courier_times.reduce((a, b) => a + b, 0) /
+        this.courier_times.length;
 
       $("#courierWaitTimes").append(
         courier + " wait: " + waitTime + " ms" + "\n"
@@ -87,21 +86,18 @@ let vue = new Vue({
   },
 });
 
-
-
 async function uploadOrders(options) {
   var slider = document.getElementById("jobRange");
 
-  vue.couriers_pending = [],
-  vue.couriers_ready = [],
-  vue.orders_pending = [],
-  vue.orders_ready = [],
-  vue.courier_times = [],
-  vue.order_times = [],
-  vue.order_average= 0,
-  vue.courier_average= 0,
-  vue.strategy = ''
-
+  (vue.couriers_pending = []),
+    (vue.couriers_ready = []),
+    (vue.orders_pending = []),
+    (vue.orders_ready = []),
+    (vue.courier_times = []),
+    (vue.order_times = []),
+    (vue.order_average = 0),
+    (vue.courier_average = 0),
+    (vue.strategy = "");
 
   //read the range slider for desired number of jobs pr. second.
 
@@ -122,11 +118,16 @@ async function uploadOrders(options) {
       return result;
     }, []);
 
-    setInterval(
+    var loop = setInterval(
       function () {
         if (slicedOrders.length > 0) {
+          //hide our controls since we are still running
+          $("#controls").hide();
           postOrderToApi(slicedOrders.slice(0, 1), strategy);
           slicedOrders.shift();
+        } else {
+          $("#controls").show();
+          clearInterval(loop);
         }
       },
       1000,
@@ -162,9 +163,6 @@ function postOrderToApi(orders, strategy) {
     });
   });
 }
-
-
-
 
 //Set up the order/second slider.
 var slider = document.getElementById("jobRange");
